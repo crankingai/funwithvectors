@@ -1,0 +1,15 @@
+{
+   "navigationFallback": {
+       "rewrite": "/index.html"
+   },
+   "mimeTypes": {
+      ".js": "application/javascript",
+      ".css": "text/css",
+      ".html": "text/html"
+   },
+   "responseOverrides": {
+      "404": {
+         "rewrite": "/404.html"
+      }
+   }
+}
