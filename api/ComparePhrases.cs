@@ -33,7 +33,7 @@ namespace api
             if (string.IsNullOrEmpty(phrase1) || string.IsNullOrEmpty(phrase2))
             {
                 _logger.LogError("Function ⟪ComparePhrases⟫ → Missing required query parameters: phrase1 and/or phrase2.");
-                return new BadRequestObjectResult("Please pass both phrase1 and phrase2 in the query string.");
+                return new BadRequestObjectResult("Both phrase1 and phrase2 are required.");
             }
 
             var semcomp = new SemanticComparer(_embeddingService);
