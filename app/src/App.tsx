@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import reactLogo from './assets/crankingai-logo.svg'
 import viteLogo from '/crankingai-logo.svg'
 import './App.css'
@@ -7,6 +7,7 @@ function App() {
   const [phrase1, setPhrase1] = useState('')
   const [phrase2, setPhrase2] = useState('')
   const [results, setResults] = useState('')
+  const resultsRef = useRef<HTMLTextAreaElement>(null)
 
   const comparePhrases = async () => {
     try {
@@ -19,44 +20,66 @@ function App() {
 
       const functionApiUrl = `${functionBaseUrl}?${queryParams}`;
       console.log('ComparePhrases API URL:', functionApiUrl);
-      
+
       const response = await fetch(functionApiUrl, {
         method: 'GET',
         headers: {
           'Accept': 'text/plain'
         }
       });
-      
+
       const data = await response.text();
-      setResults(data);
+      setResults(prevResults => {
+        // const timestamp = new Date().toLocaleTimeString();
+        return `${prevResults}${prevResults ? '\n\n' : ''}[${data}`;
+      });
     } catch (error) {
       console.error('Error:', error);
-      setResults('Error comparing phrases. Please try again.');
+      setResults(prevResults => {
+        const timestamp = new Date().toLocaleTimeString();
+        return `${prevResults}${prevResults ? '\n\n' : ''}[${timestamp}] Error comparing phrases. Please try again.`;
+      });
     }
   }
 
+  const handleKeyPress = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      comparePhrases();
+    }
+  };
+
+  useEffect(() => {
+    if (resultsRef.current) {
+      resultsRef.current.scrollTop = resultsRef.current.scrollHeight
+    }
+  }, [results])
+
   return (
     <>
-      <div>
+      <h2>Using OpenAI's <em>text-embedding-3-large</em> model with vector length 3072 floats.</h2>
+
+      <div className="header-container">
         <a href="https://vite.dev" target="_blank" rel="noopener noreferrer">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
+        <h1 className="title">🥳 Fun with ⟨Vectors⟩ ↖↑↗ 🤖</h1>
         <a href="https://react.dev" target="_blank" rel="noopener noreferrer">
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Text Comparison</h1>
       <div className="input-container">
         <input
           type="text"
           value={phrase1}
           onChange={(e) => setPhrase1(e.target.value)}
+          onKeyPress={handleKeyPress}
           placeholder="Enter first phrase"
         />
         <input
           type="text"
           value={phrase2}
           onChange={(e) => setPhrase2(e.target.value)}
+          onKeyPress={handleKeyPress}
           placeholder="Enter second phrase"
         />
       </div>
@@ -65,12 +88,16 @@ function App() {
       </div>
       <div className="results-container">
         <textarea
+          ref={resultsRef}
           value={results}
           readOnly
           placeholder="Comparison results will appear here..."
-          rows={4}
+          rows={12}
         />
       </div>
+      <footer className="footer">
+        <p>View the source code on <a href="https://github.com/crankingai/funwithvectors" target="_blank" rel="noopener noreferrer">GitHub</a></p>
+      </footer>
     </>
   )
 }
