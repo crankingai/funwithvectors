@@ -9,6 +9,13 @@ npm install
 npm run dev
 ```
 
+## Validation
+
+```console
+npx tsc --noEmit 
+npm run lint
+```
+
 ## Default Info
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
