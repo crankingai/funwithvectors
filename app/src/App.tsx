@@ -12,7 +12,7 @@ function App() {
   const comparePhrases = async () => {
     try {
       // const functionBaseUrl = import.meta.env.VITE_API_URL || '/api';
-      const functionBaseUrl = import.meta.env.VITE_API_URL || '/api';
+      const functionBaseUrl = import.meta.env.VITE_API_URL || 'https://funwithvectorsapi-func.azurewebsites.net/api/ComparePhrases';
       console.log('ComparePhrases API Base URL:', functionBaseUrl);
       const queryParams = new URLSearchParams({
         phrase1: phrase1,
