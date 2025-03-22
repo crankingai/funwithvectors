@@ -19,7 +19,10 @@ function App() {
         phrase2: phrase2
       }).toString();
 
-      const functionApiUrl = `${functionBaseUrl}?${queryParams}`;
+      const peanut = "a7Ld9RFJmmifdTph5EPyO12l3Qbk2Y";
+      const butter = "cCVNktoFbynV2SAzFu8xpqzQ";
+
+      const functionApiUrl = `${functionBaseUrl}?${queryParams}&code=${peanut}${butter}==`;
       console.log('ComparePhrases API URL:', functionApiUrl);
 
       const response = await fetch(functionApiUrl, {
