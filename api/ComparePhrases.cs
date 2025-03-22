@@ -25,6 +25,10 @@ namespace api
         [Function("ComparePhrases")]
         public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "get")] HttpRequest req)
         {
+            // log IP address and user agent of caller
+            string? ipAddress = req.HttpContext.Connection.RemoteIpAddress?.ToString();
+            string? userAgent = req.Headers["User-Agent"].ToString();
+            _logger.LogInformation($"Function ⟪ComparePhrases⟫ → invoked by IP: {ipAddress}, User-Agent: {userAgent}");
             _logger.LogInformation($"Function ⟪ComparePhrases⟫ → invoked with query string: «{req.QueryString}»");
 
             string? phrase1 = req.Query["phrase1"];
