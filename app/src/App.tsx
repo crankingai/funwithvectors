@@ -12,6 +12,7 @@ function App() {
   const comparePhrases = async () => {
     try {
       const functionBaseUrl = import.meta.env.VITE_API_URL || '/api';
+      const functionBaseUrl = import.meta.env.VITE_API_URL || '/api';
       console.log('ComparePhrases API Base URL:', functionBaseUrl);
       const queryParams = new URLSearchParams({
         phrase1: phrase1,
