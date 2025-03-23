@@ -35,7 +35,7 @@ function App() {
       const data = await response.text();
       setResults(prevResults => {
         // const timestamp = new Date().toLocaleTimeString();
-        return `${prevResults}${prevResults ? '\n\n' : ''}[${data}`;
+        return `${prevResults}${prevResults ? '\n\n' : ''}${data}`;
       });
     } catch (error) {
       console.error('Error:', error);
